@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Financeira - Juros Compostos</title>
+  <meta name="description" content="Simule seus investimentos com nossa Calculadora de Juros Compostos online gratuita. Saiba quanto seu dinheiro pode render." />
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f2f2; color: #333; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    .container { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.2); width: 300px; }
+    h1 { font-size: 20px; text-align: center; color: #e60000; }
+    input[type=number] { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; }
+    button { width: 100%; padding: 10px; background: #e60000; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    button:hover { background: #cc0000; }
+    .result { margin-top: 15px; text-align: center; font-size: 18px; color: #006600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Juros Compostos</h1>
+    <label>Investimento Inicial (€):</label>
+    <input type="number" id="principal" placeholder="Ex: 1000" required>
+
+    <label>Contribuição Mensal (€):</label>
+    <input type="number" id="monthly" placeholder="Ex: 100">
+
+    <label>Taxa de Juros Anual (%):</label>
+    <input type="number" id="rate" placeholder="Ex: 8">
+
+    <label>Período (anos):</label>
+    <input type="number" id="years" placeholder="Ex: 5">
+
+    <button onclick="calculateCompoundInterest()">Calcular</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateCompoundInterest() {
+      const principal = parseFloat(document.getElementById('principal').value);
+      const monthly = parseFloat(document.getElementById('monthly').value);
+      const rate = parseFloat(document.getElementById('rate').value) / 100 / 12;
+      const years = parseInt(document.getElementById('years').value);
+      const months = years * 12;
+
+      if(isNaN(principal) || isNaN(monthly) || isNaN(rate) || isNaN(years)) {
+        document.getElementById('result').innerText = 'Por favor, preencha todos os campos corretamente.';
+        return;
+      }
+
+      let total = principal * Math.pow(1 + rate, months);
+
+      for(let i = 1; i <= months; i++) {
+        total += monthly * Math.pow(1 + rate, months - i);
+      }
+
+      document.getElementById('result').innerText = 'Valor Futuro: € ' + total.toFixed(2);
+    }
+  </script>
+</body>
+</html>
